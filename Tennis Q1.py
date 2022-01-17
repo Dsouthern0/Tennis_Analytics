@@ -2,6 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import mplcursors
 
+print("Enter start date")
+start_date = (input())
+print("Enter end date")
+end_date = (input())
+
 grand_slam_df = pd.read_csv('data/tournaments_1877-2017_unindexed_csv.csv', parse_dates = ['tourney_dates'])
 #grand_slam = ["wimbledon", "us-open", "australian-open", "roland-garros"]
 grand_slam = ["wimbledon", "us-open", "australian-open", "roland-garros"]
@@ -19,7 +24,9 @@ grand_slam_df = grand_slam_df.pivot(index = 'singles_winner_name', columns = 'to
 grand_slam_df = grand_slam_df.T
 grand_slam_df = grand_slam_df.fillna(method='bfill')
 
-grand_slam_df.plot(legend = None)
+grand_slam_df  = grand_slam_df.loc[start_date:end_date]
+
+grand_slam_df = grand_slam_df.plot(legend = None)
 
 plt.yticks([0, 4, 8, 12, 16, 20])
 plt.xlabel("Year")
