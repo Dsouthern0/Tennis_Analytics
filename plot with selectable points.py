@@ -37,7 +37,8 @@ count = grand_slam_df.groupby(['singles_winner_name']).cumcount().add(1)
 grand_slam_df.insert(2, "count", count, True)
 player_win_count_df = grand_slam_df.pivot(index = 'singles_winner_name', columns = 'tourney_dates', values = 'count')
 player_win_count_df = player_win_count_df.T
-player_win_count_df = player_win_count_df.fillna(method='bfill')
+player_win_count_df_temp = player_win_count_df.fillna(method='bfill')
+player_win_count_df = player_win_count_df.fillna(player_win_count_df_temp - 1)
 player_win_count_df  = player_win_count_df.loc[start_date:end_date]
 player_win_count_df = player_win_count_df.plot(marker = '.', legend = None)
 
